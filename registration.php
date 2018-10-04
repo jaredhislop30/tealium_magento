@@ -2,6 +2,6 @@
 
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Tealium_TemoTags',
+    'Tealium_TempTags',
     __DIR__
 );
