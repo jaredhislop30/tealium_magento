@@ -37,7 +37,23 @@ if ($this->getRegestry()->registry('current_product')->getTypeId() == 'configura
     ?>
 
     <script type="text/javascript">
-        console.log("this is a test from new plugin");
+        require(['jquery'],function($){
+            $(function(){
+                $('[data-role=priceBox]').on('updatePrice',function(event){
+                    var oldPrice = event.target.innerText;
+                    if (oldPrice != ""){
+                        var newPrice = oldPrice.substring(1);
+                        newPrice.replace(/\r?\n|\r/g, "");
+                        newPrice.replace(/[^0-9.]/g, "");
+                        var oldUDO = utag_data;
+                        if (oldUDO.product_price[0] != newPrice){
+                            oldUDO.product_price = [newPrice];
+                            utag.view(oldUDO);
+                        }
+                    }
+                })
+            })
+        });
     </script>
 
 <?php
