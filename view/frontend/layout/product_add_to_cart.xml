@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+ 
+<layout version="0.1.0">
+    <checkout_cart_index>
+        <reference name="before_body_end">
+            <block class="Tealium\Tags\Block\Template" name="tealium_product" as="tealium_product" template="tealium_tags/product_add_to_cart.phtml" before="tealium_base" />
+        </reference>
+    </checkout_cart_index>
+</layout>
