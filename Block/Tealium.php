@@ -158,7 +158,7 @@ class Tealium extends \Magento\Framework\View\Element\Template{
             // Therefore the udo object must be generated as javascript code.
 
             //Check if Cache Bust is enabled
-            print_r($this->cache_bust);
+            // print_r($this->cache_bust);
             // if($this->cache_bust){
             //     $cache_bust = "?_cb".mt_rand();
             // }else{
