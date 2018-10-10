@@ -13,6 +13,7 @@ class Tealium extends \Magento\Framework\View\Element\Template{
     private $account; // account name
     private $profile; // profile name
     private $target;
+    private $cache_bust; // Cache Bust Enabled T/F
     private $udo; // object (assoc array) of udo variables (key/val pairs)
     private $udoElements;
     private $customUdo;
@@ -36,6 +37,7 @@ class Tealium extends \Magento\Framework\View\Element\Template{
         $accountInit = false,
         $profileInit = false,
         $targetInit = false,
+        $cache_bustInit = false,
         $pageType = "Home",
         &$data = array()
     ) {
@@ -58,7 +60,15 @@ class Tealium extends \Magento\Framework\View\Element\Template{
         $this->account = $accountInit;
         $this->profile = $profileInit;
         $this->target = $targetInit;
+        $this->cache_bust = $cache_bustInit;
 
+        //Check if Cache Bust is enabled
+        print($this->cache_bust);
+        // if($this->cache_bust){
+        //     $cache_bust = "?_cb".mt_rand();
+        // }else{
+        //     $cache_bust = "";
+        // }
         if (
             !($this->udo = $this->udoElements[$pageType])
             && $pageType != null
@@ -156,14 +166,6 @@ class Tealium extends \Magento\Framework\View\Element\Template{
         } else {
             // Either using the api, the udo is not an external script, or both.
             // Therefore the udo object must be generated as javascript code.
-
-            //Check if Cache Bust is enabled
-            // print_r($this->cache_bust);
-            // if($this->cache_bust){
-            //     $cache_bust = "?_cb".mt_rand();
-            // }else{
-            //     $cache_bust = "";
-            // }
 
             // include any customizations
             if (isset($this->customUdo)) {

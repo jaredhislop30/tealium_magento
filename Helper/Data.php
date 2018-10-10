@@ -49,6 +49,7 @@ class Data extends AbstractHelper
         $account = $this->getAccount($store);
         $profile = $this->getProfile($store);
         $env = $this->getEnv($store);
+        $cache_bust = $this->getEnv($store);
 
         $data = array(
             "store" => $store,
@@ -208,6 +209,13 @@ class Data extends AbstractHelper
     public function getEnv($store)
     {
         return $this->scopeConfig->getValue('tealium_tags/general/env', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store->getId());
+    }
+    /*
+     * Return whether cache bust is enabled
+     */
+    public function getCacheBust($store)
+    {
+        return $this->scopeConfig->getValue('tealium_tags/general/cache_bust', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store->getId());
     }
 
     /*
