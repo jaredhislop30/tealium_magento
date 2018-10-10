@@ -158,11 +158,12 @@ class Tealium extends \Magento\Framework\View\Element\Template{
             // Therefore the udo object must be generated as javascript code.
 
             //Check if Cache Bust is enabled
-            if($this->cache_bust){
-                $cache_bust = "?_cb".mt_rand();
-            }else{
-                $cache_bust = "";
-            }
+            print_r($this->cache_bust);
+            // if($this->cache_bust){
+            //     $cache_bust = "?_cb".mt_rand();
+            // }else{
+            //     $cache_bust = "";
+            // }
 
             // include any customizations
             if (isset($this->customUdo)) {
@@ -206,7 +207,7 @@ EOD;
         // Render Tealium tag in javaScript
         $insert_tag = <<<EOD
 (function(a,b,c,d){
-    a='//tags.tiqcdn.com/utag/$this->account/$this->profile/$this->target/utag.js$cache_bust';
+    a='//tags.tiqcdn.com/utag/$this->account/$this->profile/$this->target/utag.js';
     b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c; 
     d.async=true;
     a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
