@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
- 
-<layout version="0.1.0">
-    <checkout_cart_index>
-        <reference name="before_body_end">
-            <block type="tealium_tags/event_checkout_cart_index" name="tealium_tags_event_checkout_cart_index" template="tealium_tags/index.phtml" />
-        </reference>
-    </checkout_cart_index>
-</layout>
