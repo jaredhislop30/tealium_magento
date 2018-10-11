@@ -62,7 +62,6 @@ class Tealium extends \Magento\Framework\View\Element\Template{
         $this->target = $targetInit;
         $this->cache_bust = $cache_bustInit;
 
-        print($this->cache_bust);
         if (
             !($this->udo = $this->udoElements[$pageType])
             && $pageType != null
@@ -203,7 +202,7 @@ EOD;
         // Render Tealium tag in javaScript
         $insert_tag = <<<EOD
 (function(a,b,c,d){
-    a='//tags.tiqcdn.com/utag/$this->account/$this->profile/$this->target/utag.js';
+    a='//tags.tiqcdn.com/utag/$this->account/$this->profile/$this->target/utag.js$this->cache_bust';
     b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c; 
     d.async=true;
     a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
