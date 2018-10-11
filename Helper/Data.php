@@ -215,7 +215,11 @@ class Data extends AbstractHelper
      */
     public function getCacheBust($store)
     {
-        return $this->scopeConfig->getValue('tealium_tags/general/cache_bust', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store->getId());
+        if ($this->scopeConfig->getValue('tealium_tags/general/cache_bust', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store->getId())) {
+            return "?_cb=".mt_rand();
+        } else {
+            return "";
+        }
     }
 
     /*
@@ -277,11 +281,7 @@ class Data extends AbstractHelper
      */
     public function getDiagnosticTag($store)
     {
-        if ($this->scopeConfig->getValue(
-            'tealium_tags/general/diagnostic_enable', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $store->getId()
-        )
-        ) {
+        if ($this->scopeConfig->getValue('tealium_tags/general/diagnostic_enable', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store->getId())) {
             $utag_data = urlencode($this->tealium->render("json"));
             $url = $this->scopeConfig->getValue(
                     'tealium_tags/general/diagnostic_tag', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,

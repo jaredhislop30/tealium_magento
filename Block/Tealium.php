@@ -63,7 +63,10 @@ class Tealium extends \Magento\Framework\View\Element\Template{
         $this->cache_bust = $cache_bustInit;
 
         //Check if Cache Bust is enabled
-        print($this->cache_bust);
+        if ($this->scopeConfig->getValue('tealium_tags/general/cache_bust', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store->getId())) {
+            echo($this->cache_bust);
+            echo("?_cb".mt_rand());
+        }
         // if($this->cache_bust){
         //     $cache_bust = "?_cb".mt_rand();
         // }else{
@@ -209,7 +212,7 @@ EOD;
         // Render Tealium tag in javaScript
         $insert_tag = <<<EOD
 (function(a,b,c,d){
-    a='//tags.tiqcdn.com/utag/$this->account/$this->profile/$this->target/utag.js';
+    a='//tags.tiqcdn.com/utag/$this->account/$this->profile/$this->target/utag.js$this->cache_bust';
     b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c; 
     d.async=true;
     a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
