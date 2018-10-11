@@ -1,35 +1,7 @@
 <?xml version="1.0"?>
- 
-<config>
-    <modules>
-        <tealium_tags>
-            <version>1.0.0.0</version>
-        </tealium_tags>
-    </modules>
-    <global>
-        <models>
-            <tealium_tags>
-                <class>tealium_tags_model</class>
-            </tealium_tags>
-        </models>
-    </global>
-    <frontend>
-        <layout>
-            <updates>
-                <tealium_tags>
-                    <file>tealium_tags.xml</file>
-                </tealium_tags>
-            </updates>
-        </layout>
-        <events>
-            <controller_action_predispatch_checkout_cart_add>
-                <observers>
-                    <tealium_tags_log_cart_add>
-                        <class>tealium_tags/observer</class>
-                        <method>logCartAdd</method>
-                    </tealium_tags_log_cart_add>
-                </observers>
-            </controller_action_predispatch_checkout_cart_add>
-        </events>
-    </frontend>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <!-- you can change this event name -->
+    <event name="controller_action_predispatch_checkout_cart_add">
+        <observer name="tealium_tags" instance="Tealium\Tags\Observer\Observer" />
+    </event>
 </config>
