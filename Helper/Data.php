@@ -216,7 +216,7 @@ class Data extends AbstractHelper
     public function getCacheBust($store)
     {
         if ($this->scopeConfig->getValue('tealium_tags/general/cache_bust', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store->getId())) {
-            return "?_cb=".mt_rand();
+            return strval("?_cb=".mt_rand());
         } else {
             return "";
         }
