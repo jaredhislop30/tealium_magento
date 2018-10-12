@@ -17,19 +17,12 @@ class Observer implements ObserverInterface
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Framework\App\Request\Http $request
     ) {
-        product = $observer->getProduct();
-        
-        $originalName = $product->getName();
- 
-        $modifiedName = $originalName . ' - Modified by Magento 2 Events and Observers - Construct';
- 
-        $product->setName($modifiedName);
         print("Construct Add to Cart");
     }
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        product = $observer->getProduct();
+        $product = $observer->getProduct();
 
         $originalName = $product->getName();
  
