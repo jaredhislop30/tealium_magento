@@ -4,6 +4,9 @@
  * User: svatoslavzilicev
  * Date: 18.08.17
  * Time: 16:50
+ * checkout_cart_add_product_complete
+ * checkout_cart_product_add_after
+ *
  */
 
 namespace Tealium\Tags\Observer;
@@ -31,13 +34,11 @@ class Observer implements ObserverInterface
         \Magento\Framework\App\Request\Http $request
     ) {
         print("Construct Add to Cart");
-        $this->_objectManager = $objectManager;
-        $this->_request = $request;
     }
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        print("execute add to cart");
+        print("Execute add to cart");
     }
 
 }
