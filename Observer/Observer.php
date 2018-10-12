@@ -8,11 +8,8 @@
  * checkout_cart_product_add_after
  *
  */
-
 namespace Tealium\Tags\Observer;
-
 use Magento\Framework\Event\ObserverInterface;
-
 class Observer implements ObserverInterface
 {
 
