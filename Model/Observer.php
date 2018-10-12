@@ -1,14 +1,20 @@
 <?php
 class Tealium_Tags_Model_Observer {
 
-    public function example($observer) {
-        //$observer contains data passed from when the event was triggered.
-        //You can use this data to manipulate the order data before it's saved.
-        //Uncomment the line below to log what is contained here:
-        print("this is a test");
-        Mage::log($observer);
-
-        Mage::log('We just made an Observer!');
+    protected $_logger;
+    public function __construct(
+        \Psr\Log\LoggerInterface $logger, //log injection
+        array $data = []
+    ) {
+        $this->_logger = $logger;
+        parent::__construct($data);
+    }
+    public function example() {
+        /*
+        some logic of method
+        */
+        //accessing to logger instance and calling log method
+        $this->_logger->addDebug('Triggered Observer');
     }
 
 }
