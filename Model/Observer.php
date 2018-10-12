@@ -1,5 +1,5 @@
 <?php
-class Meteorify_Observerexample_Model_Observer {
+class Tealium_Tags_Model_Observer {
 
     public function example($observer) {
         //$observer contains data passed from when the event was triggered.
