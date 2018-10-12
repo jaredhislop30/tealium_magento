@@ -59,7 +59,7 @@ class Data extends AbstractHelper
         $this->store = $store;
         $this->page = $page;
         $this->tealium = $this->_objectManager->create('Tealium\Tags\Block\Tealium')->init($account, $profile, $env, $cache_bust, $pageType, $data);
-
+        print_r($this)
         return $this;
     }
 
