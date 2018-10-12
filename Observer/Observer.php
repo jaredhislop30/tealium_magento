@@ -16,19 +16,6 @@ use Magento\Framework\Event\ObserverInterface;
 class Observer implements ObserverInterface
 {
 
-    /**
-     * @var ObjectManagerInterface
-     */
-    protected $_objectManager;
-
-    /**
-     * @var \Magento\Framework\App\Request\Http
-     */
-    protected $_request;
-
-    /**
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
-     */
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Framework\App\Request\Http $request

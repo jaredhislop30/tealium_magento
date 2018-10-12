@@ -9,7 +9,7 @@
  *
  */
 
-namespace Tealium\Tags\Observer;
+namespace Tealium\Tags\Observer\Product;
 
 use Magento\Framework\Event\ObserverInterface;
 

@@ -8,6 +8,6 @@
         <observer name="tealium_tags" instance="Tealium\Tags\Observer\Observer" />
     </event>
     <event name="catalog_controller_product_view">
-        <observer name="tealium_tags" instance="Tealium\Tags\Observer\Product" />
+        <observer name="tealium_tags" instance="Tealium\Tags\Observer\Product\Product" />
     </event>
 </config>
