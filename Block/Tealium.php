@@ -25,11 +25,13 @@ class Tealium extends \Magento\Framework\View\Element\Template{
         \Magento\Backend\Block\Template\Context $context,
         \Tealium\Tags\Helper\TealiumData $helper,
         \Magento\Framework\App\Request\Http $request,
+        \Psr\Log\LoggerInterface $logger,
         array $data = []
     )
     {
         $this->_helper = $helper;
         $this->_request = $request;
+        $this->logger = $logger;
         parent::__construct($context, $data);
     }
 
