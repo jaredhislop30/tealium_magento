@@ -36,6 +36,7 @@ class Api implements ObserverInterface
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
+        print("api event");
         // if the "tealium_api" parameter is set to true, set the response
         // to only contain relevant Tealium logic.
         if ( $this->_request->getParam('tealium_api') == "true" )

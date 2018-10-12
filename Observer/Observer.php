@@ -1,30 +1,22 @@
 <?php
+class Tealium_Tags_Model_Observer {
 
-namespace Tealium\Tags\Observer;
-
-use Magento\Framework\Event\ObserverInterface;
-
-class Observer implements ObserverInterface
-{
-    public function __construct() {
-        print("add to cart");
-        $product = Mage::getModel('catalog/product')
-                        ->load(Mage::app()->getRequest()->getParam('product', 0));
- 
-        if (!$product->getId()) {
-            return;
-        }
-        
-        $categories = $product->getCategoryIds();
- 
-        // Mage::getModel('core/session')->setProductToShoppingCart(
-        //     new Varien_Object(array(
-        //         'id' => $product->getId(),
-        //         'qty' => Mage::app()->getRequest()->getParam('qty', 1),
-        //         'name' => $product->getName(),
-        //         'price' => $product->getPrice(),
-        //         'category_name' => Mage::getModel('catalog/category')->load($categories[0])->getName(),
-        //     ))
-        // );
+    protected $_logger;
+    public function __construct(
+        \Psr\Log\LoggerInterface $logger, //log injection
+        array $data = []
+    ) {
+        print("construct");
+        $this->_logger = $logger;
+        parent::__construct($data);
     }
+    public function execute() {
+        print("execute");
+        /*
+        some logic of method
+        */
+        //accessing to logger instance and calling log method
+        $this->_logger->addDebug('Triggered Observer');
+    }
+
 }
