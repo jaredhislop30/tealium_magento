@@ -33,6 +33,8 @@ if ($helper->getIsExternalScript($store)) {
 // enabled in the config.
 echo $helper->getDiagnosticTag($store);
 
+print_r($tealium);
+
 if ($this->getRegestry()->registry('current_product')->getTypeId() == 'configurable'):
     ?>
 
@@ -55,7 +57,10 @@ if ($this->getRegestry()->registry('current_product')->getTypeId() == 'configura
             })
         });
     </script>
-
 <?php
+
+
+
+
 
 endif;
