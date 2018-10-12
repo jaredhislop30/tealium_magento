@@ -14,7 +14,8 @@ $tealium = $helper->init($store, $this, "ProductPage")
     ->addCustomDataFromSetup($store, "ProductPage")
     ->getTealiumObject();
 
-print_r($this);
+
+$this->logger->debug($this);
 
 // load and use the external config if it's enabled, and render Tealium
 // JavaScript code to the page.

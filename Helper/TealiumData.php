@@ -30,12 +30,14 @@ class TealiumData extends AbstractHelper{
         \Magento\Store\Api\Data\StoreInterface $store,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Framework\Registry $registry,
-        \Magento\Checkout\Model\Session $checkoutSession
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Psr\Log\LoggerInterface $logger
     ) {
         $this->_store = $store;
         $this->_objectManager = $objectManager;
         $this->_registry = $registry;
         $this->_checkoutSession = $checkoutSession;
+        $this->logger = $logger;
         parent::__construct(
             $context
         );
