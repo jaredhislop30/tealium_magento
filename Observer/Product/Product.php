@@ -8,27 +8,34 @@
  * checkout_cart_product_add_after
  *
  */
-
-namespace Tealium\Tags\Observer\Product;
-
+namespace Tealium\Tags\Observer;
 use Magento\Framework\Event\ObserverInterface;
-
 class Product implements ObserverInterface
 {
+
     /**
- 
-     * Below is the method that will fire whenever the event runs!
- 
-     *
- 
-     * @param Observer $observer
- 
+     * @var ObjectManagerInterface
      */
- 
-    public function execute(Observer $observer)
- 
+    protected $_objectManager;
+
+    /**
+     * @var \Magento\Framework\App\Request\Http
+     */
+    protected $_request;
+
+    /**
+     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     */
+    public function __construct(
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Magento\Framework\App\Request\Http $request
+    ) {
+        $this->_objectManager = $objectManager;
+        $this->_request = $request;
+    }
+
+    public function execute(\Magento\Framework\Event\Observer $observer)
     {
- 
         $product = $observer->getProduct();
  
         $originalName = $product->getName();
@@ -36,7 +43,6 @@ class Product implements ObserverInterface
         $modifiedName = $originalName . ' - Modified by Magento 2 Events and Observers';
  
         $product->setName($modifiedName);
- 
     }
 
 }
