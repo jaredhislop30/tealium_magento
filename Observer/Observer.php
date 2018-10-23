@@ -36,25 +36,24 @@ class Observer implements ObserverInterface
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        print("test");
-        // $product = Mage::getModel('catalog/product')
-        //                 ->load(Mage::app()->getRequest()->getParam('product', 0));
+        $product = Mage::getModel('catalog/product')
+                        ->load(Mage::app()->getRequest()->getParam('product', 0));
  
-        // if (!$product->getId()) {
-        //     return;
-        // }
+        if (!$product->getId()) {
+            return;
+        }
  
-        // $categories = $product->getCategoryIds();
+        $categories = $product->getCategoryIds();
  
-        // Mage::getModel('core/session')->setProductToShoppingCart(
-        //     new Varien_Object(array(
-        //         'id' => $product->getId(),
-        //         'qty' => Mage::app()->getRequest()->getParam('qty', 1),
-        //         'name' => $product->getName(),
-        //         'price' => $product->getPrice(),
-        //         'category_name' => Mage::getModel('catalog/category')->load($categories[0])->getName(),
-        //     ))
-        // );
+        Mage::getModel('core/session')->setProductToShoppingCart(
+            new Varien_Object(array(
+                'id' => $product->getId(),
+                'qty' => Mage::app()->getRequest()->getParam('qty', 1),
+                'name' => $product->getName(),
+                'price' => $product->getPrice(),
+                'category_name' => Mage::getModel('catalog/category')->load($categories[0])->getName(),
+            ))
+        );
     }
 
 }
