@@ -10,7 +10,6 @@
         <referenceContainer name="after.body.start">
             <referenceBlock name="tealium_generic" remove="true"/>
             <block class="Tealium\Tags\Block\Template" name="tealium_checkout_cart_index" as="tealium_checkout_cart_index" template="tealium_tags/checkout_cart_index.phtml" before="tealium_base" />
-            <block class="Tealium\Tags\Block\Template" name="tealium_checkout_cart_index" as="tealium_checkout_cart_index" template="tealium_tags/index.phtml" before="tealium_base" />
         </referenceContainer>
     </body>
 </page>

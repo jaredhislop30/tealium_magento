@@ -36,6 +36,7 @@ class Observer implements ObserverInterface
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
+        print("test");
         // $product = Mage::getModel('catalog/product')
         //                 ->load(Mage::app()->getRequest()->getParam('product', 0));
  

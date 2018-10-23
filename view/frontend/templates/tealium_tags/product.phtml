@@ -14,8 +14,6 @@ $tealium = $helper->init($store, $this, "ProductPage")
     ->addCustomDataFromSetup($store, "ProductPage")
     ->getTealiumObject();
 
-
-
 // load and use the external config if it's enabled, and render Tealium
 // JavaScript code to the page.
 if ($helper->getIsExternalScript($store)) {
@@ -57,10 +55,7 @@ if ($this->getRegestry()->registry('current_product')->getTypeId() == 'configura
             })
         });
     </script>
+
 <?php
-
-
-
-
 
 endif;
