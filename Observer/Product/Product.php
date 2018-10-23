@@ -23,26 +23,43 @@ class Product implements ObserverInterface
      */
     protected $_request;
 
+    public function setValue($value){
+        $this->session->start();
+        $this->session->setMessage($value);
+     }
+ 
+    public function getValue(){
+        $this->session->start();
+        return $this->session->getMessage();
+    }
+ 
+    public function unSetValue(){
+        $this->session->start();
+        return $this->session->unsMessage();
+    }
+
     /**
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      */
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        \Magento\Framework\App\Request\Http $request
+        \Magento\Framework\App\Request\Http $request,
+        \Magento\Framework\Session\SessionManagerInterface $session
     ) {
         $this->_objectManager = $objectManager;
         $this->_request = $request;
+        $this->session = $session;
     }
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $product = $observer->getProduct();
  
-        $originalName = $product->getName();
- 
-        $modifiedName = $originalName . ' - Modified by Magento 2 Events and Observers';
- 
-        $product->setName($modifiedName);
+        $product_name = $product->getName();
+
+        $this->session->start();
+        $this->session->setValue($product_name);
     }
+
 
 }

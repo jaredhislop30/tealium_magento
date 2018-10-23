@@ -1,7 +1,8 @@
-<?php $_product = Mage::getModel('core/session')->getProductToShoppingCart() ?>
-<?php if ($_product && $_product->getId()): ?>
+<?php $_product = $this->session->getValue() ?>
+<?php?>
     <script type="text/javascript">
-        console.log("testing here");
+        console.log("testing add to cart here");
+        console.log(<?php echo $_product ?>);
     </script>
     <?php Mage::getModel('core/session')->unsProductToShoppingCart(); ?>
 <?php endif; ?>
