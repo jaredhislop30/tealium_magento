@@ -7,7 +7,7 @@
     <event name="checkout_cart_product_add_after">
         <observer name="tealium_tags" instance="Tealium\Tags\Observer\Observer" />
     </event>
-<!--     <event name="catalog_controller_product_view">
+    <event name="catalog_controller_product_view">
         <observer name="tealium_tags" instance="Tealium\Tags\Observer\Product\Product" />
-    </event> -->
+    </event>
 </config>
