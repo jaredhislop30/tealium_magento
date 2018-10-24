@@ -1,8 +1,5 @@
 <?php $_product = $this->session->getValue() ?>
-<?php?>
     <script type="text/javascript">
         console.log("testing add to cart here");
         console.log(<?php echo $_product ?>);
     </script>
-    <?php Mage::getModel('core/session')->unsProductToShoppingCart(); ?>
-<?php endif; ?>
