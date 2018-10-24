@@ -296,4 +296,14 @@ class Data extends AbstractHelper
             return "";
         }
     }
+    /**
+     * Format Price
+     *
+     * @param $price
+     * @return float
+     */
+    public function formatPrice($price)
+    {
+        return (float)sprintf('%.2F', $price);
+    }
 }
