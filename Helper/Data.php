@@ -49,7 +49,6 @@ class Data extends AbstractHelper
         $account = $this->getAccount($store);
         $profile = $this->getProfile($store);
         $env = $this->getEnv($store);
-        $cache_bust = $this->getCacheBust($store);
 
         $data = array(
             "store" => $store,
@@ -58,7 +57,7 @@ class Data extends AbstractHelper
 
         $this->store = $store;
         $this->page = $page;
-        $this->tealium = $this->_objectManager->create('Tealium\Tags\Block\Tealium')->init($account, $profile, $env, $cache_bust, $pageType, $data);
+        $this->tealium = $this->_objectManager->create('Tealium\Tags\Block\Tealium')->init($account, $profile, $env, $pageType, $data);
 
         return $this;
     }
@@ -210,17 +209,6 @@ class Data extends AbstractHelper
     {
         return $this->scopeConfig->getValue('tealium_tags/general/env', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store->getId());
     }
-    /*
-     * Return whether cache bust is enabled
-     */
-    public function getCacheBust($store)
-    {
-        if ($this->scopeConfig->getValue('tealium_tags/general/cache_bust', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store->getId())) {
-            return strval("?_cb=".mt_rand());
-        } else {
-            return "";
-        }
-    }
 
     /*
      * When overriding the default udo with a custom one, the code that
@@ -281,7 +269,11 @@ class Data extends AbstractHelper
      */
     public function getDiagnosticTag($store)
     {
-        if ($this->scopeConfig->getValue('tealium_tags/general/diagnostic_enable', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,$store->getId())) {
+        if ($this->scopeConfig->getValue(
+            'tealium_tags/general/diagnostic_enable', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $store->getId()
+        )
+        ) {
             $utag_data = urlencode($this->tealium->render("json"));
             $url = $this->scopeConfig->getValue(
                     'tealium_tags/general/diagnostic_tag', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
@@ -295,15 +287,5 @@ class Data extends AbstractHelper
         } else {
             return "";
         }
-    }
-    /**
-     * Format Price
-     *
-     * @param $price
-     * @return float
-     */
-    public function formatPrice($price)
-    {
-        return (float)sprintf('%.2F', $price);
     }
 }

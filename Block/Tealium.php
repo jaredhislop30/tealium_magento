@@ -13,7 +13,6 @@ class Tealium extends \Magento\Framework\View\Element\Template{
     private $account; // account name
     private $profile; // profile name
     private $target;
-    private $cache_bust; // Cache Bust Enabled T/F
     private $udo; // object (assoc array) of udo variables (key/val pairs)
     private $udoElements;
     private $customUdo;
@@ -37,7 +36,6 @@ class Tealium extends \Magento\Framework\View\Element\Template{
         $accountInit = false,
         $profileInit = false,
         $targetInit = false,
-        $cache_bustInit = false,
         $pageType = "Home",
         &$data = array()
     ) {
@@ -60,7 +58,6 @@ class Tealium extends \Magento\Framework\View\Element\Template{
         $this->account = $accountInit;
         $this->profile = $profileInit;
         $this->target = $targetInit;
-        $this->cache_bust = $cache_bustInit;
 
         if (
             !($this->udo = $this->udoElements[$pageType])
@@ -202,7 +199,7 @@ EOD;
         // Render Tealium tag in javaScript
         $insert_tag = <<<EOD
 (function(a,b,c,d){
-    a='//tags.tiqcdn.com/utag/$this->account/$this->profile/$this->target/utag.js$this->cache_bust';
+    a='//tags.tiqcdn.com/utag/$this->account/$this->profile/$this->target/utag.js';
     b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c; 
     d.async=true;
     a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
