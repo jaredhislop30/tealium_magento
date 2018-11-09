@@ -19,7 +19,6 @@ define([
 
         var dataObjectAdd = customerData.get("tealium-tags-add-to-cart");
 
-        dataObjectAdd = customerData.get("tealium-tags-add-to-cart");
         dataObjectAdd.subscribe(function (_dataObject) {
             sendData(tealiumTag, _dataObject);
         }, this);

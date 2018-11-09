@@ -55,15 +55,15 @@ class JsUpdateQty implements SectionSourceInterface
             foreach ($quoteList as $quoteItem) {
                 if (in_array($quoteItem->getItemId(), $productIdList)){
                     $productData = $this->_productHelper->getProductData($quoteItem->getProductId());
-                    array_push($result['data']['product_category'], $productData['product_category']);
-                    array_push($result['data']['product_discount'], $productData['product_discount']);
-                    array_push($result['data']['product_name'], $productData['product_name']);
+                    array_push($result['data']['product_category'], $productData['product_category'][0]);
+                    array_push($result['data']['product_discount'], $productData['product_discount'][0]);
+                    array_push($result['data']['product_name'], $productData['product_name'][0]);
                     array_push($result['data']['product_id'], $quoteItem->getProductId());
-                    array_push($result['data']['product_list_price'], $productData['product_list_price']);
+                    array_push($result['data']['product_list_price'], $productData['product_list_price'][0]);
                     array_push($result['data']['product_quantity'], $quoteItem->getQty());
-                    array_push($result['data']['product_sku'], $productData['product_sku']);
-                    array_push($result['data']['product_subcategory'], $productData['product_subcategory']);
-                    array_push($result['data']['product_unit_price'], $productData['product_list_price']);
+                    array_push($result['data']['product_sku'], $productData['product_sku'][0]);
+                    array_push($result['data']['product_subcategory'], $productData['product_subcategory'][0]);
+                    array_push($result['data']['product_unit_price'], $productData['product_unit_price'][0]);
                 }
             }
         }

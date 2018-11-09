@@ -33,6 +33,9 @@ class AddToCompare implements ObserverInterface
         
         $quoteItem = $observer->getData('product');
         $product_quantity = $quoteItem->getQty();
+        if (is_null($product_quantity)) {
+            $product_quantity = 1;
+        }
 
         $product = $this->_productFactory->create();
         $product_id = $product->getIdBySku($quoteItem->getSku());

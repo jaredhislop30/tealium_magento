@@ -11,14 +11,14 @@ class JsAddToCompare implements SectionSourceInterface
     
     protected $_customerSession;
 
-    protected $_prosuctHelper;
+    protected $_productHelper;
 
     public function __construct(
         CustomerSession $customerSession,
-        Product $prosuctHelper
+        Product $productHelper
     ) {
         $this->_customerSession = $customerSession;
-        $this->_prosuctHelper = $prosuctHelper;
+        $this->_productHelper = $productHelper;
     }
 
     public function getSectionData()
@@ -31,8 +31,9 @@ class JsAddToCompare implements SectionSourceInterface
         $this->_customerSession->unsTealiumCompareProductQty();
         $result = [];
         if ($product_id) {
-            $result = ['data'=>$this->_prosuctHelper->getProductData($product_id)];
-            $result['data']['product_quantity'] = $qty;
+            $result = ['data'=>$this->_productHelper->getProductData($product_id)];
+            $result['data']['product_quantity'] = [(string)$qty];
+            $result['data']['product_id'] = [(string)$product_id];
             $result['data']['tealium_event'] = 'add_to_compare';
         }
         

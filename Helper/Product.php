@@ -30,20 +30,26 @@ class Product extends AbstractHelper
         $this->_categoryRepository = $categoryRepository;
     }
 
-    public function getProductData($product_id) {
+    public function getProductData($product_id, $array = true) {
         $result = [];
         $product = $this->_productRepository->getById($product_id);
-        $result['product_name'] = $product->getName();
-        $result['product_price'] = $product->getPrice();
-        $result['product_sku'] = $product->getSku();
-        $result['product_list_price']  = $product->getSpecialPrice();
-        $result['product_category'] = '';
-        $result['product_subcategory'] = '';
+        $result['product_name'] = [(string)$product->getName()];
+        $result['product_unit_price'] = [(string)number_format((float)$product->getPrice(), 2, '.', '')];
+        $result['product_sku'] = [(string)$product->getSku()];
+        $result['product_list_price']  = [(string)number_format((float)$product->getSpecialPrice(), 2, '.', '')];
+        $result['product_category'] = [''];
+        $result['product_subcategory'] = [''];
         
-        $result['product_discount'] = 0;
-        if ($result['product_price'] && $result['product_list_price'] && $result['product_price'] != $result['product_list_price']) {
-            $result['product_discount'] = 100 - round(($result['product_list_price'] / $result['product_price'])*100);
+        $product_discount = 0;
+        if (
+            $result['product_unit_price'][0] != 0 && 
+            $result['product_list_price'][0] != 0 && 
+            $result['product_unit_price'][0] != $result['product_list_price'][0]
+        ) {
+            $product_discount = 100 - round(($result['product_list_price'][0] / $result['product_unit_price'][0])*100);
         }
+        
+        $result['product_discount'] = [(string)number_format((float)$product_discount, 2, '.', '')];
 
         $categoryIds = $product->getCategoryIds(); 
         
@@ -69,11 +75,11 @@ class Product extends AbstractHelper
             }
         }
         if ($mainCategory) {
-            $result['product_category'] = $mainCategory->getName();
+            $result['product_category'] = [$mainCategory->getName()];
         }
 
         if ($subCategory) {
-            $result['product_subcategory'] = $subCategory->getName();
+            $result['product_subcategory'] = [$subCategory->getName()];
         }
 
         return $result;
