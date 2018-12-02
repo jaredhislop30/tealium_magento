@@ -18,18 +18,34 @@ class JsLogoutAccount implements SectionSourceInterface
 
     public function getSectionData()
     {
-        $email = $this->_coreSession->getTealiumLogoutAccEmail();
+        /*$email = $this->_coreSession->getTealiumLogoutAccEmail();
         $this->_coreSession->unsTealiumLogoutAccEmail();
 
         $type = $this->_coreSession->getTealiumLogoutAccType();
         $this->_coreSession->unsTealiumLogoutAccType();
 
         $id = $this->_coreSession->getTealiumLogoutAccId();
-        $this->_coreSession->unsTealiumLogoutAccId();
+        $this->_coreSession->unsTealiumLogoutAccId();*/
+        //echo json_encde()
+    
+        if (isset($_COOKIE['email'])) {
+         $email = $_COOKIE['email'];
+            unset($_COOKIE['email']);
+        }
+
+        if (isset($_COOKIE['type'])) {
+          $type = $_COOKIE['type'];
+            unset($_COOKIE['type']);
+        }
+
+        if (isset($_COOKIE['id'])) {
+            $id = $_COOKIE['id'];
+            unset($_COOKIE['id']);
+        }
 
         $result = [];
 
-        if ($id) {
+        if (isset($id)) {
             $result['data']['customer_email'] = [$email];
             $result['data']['customer_id'] = [$id];
             $result['data']['customer_type'] = [$type];

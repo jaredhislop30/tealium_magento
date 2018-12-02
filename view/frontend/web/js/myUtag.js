@@ -8,7 +8,6 @@ define([
 
     function sendData(tealiumTag, _dataObject) {
         if(_.isObject(_dataObject) && _.isObject(tealiumTag) && _.has(_dataObject, 'data')){
-            console.log(_dataObject.data);
             tealiumTag.link(_dataObject.data);
         }
     }

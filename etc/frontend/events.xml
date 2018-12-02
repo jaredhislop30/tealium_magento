@@ -26,10 +26,10 @@
                   instance="Tealium\Tags\Observer\AddToCompare" />
     </event>
 
-    <event name="customer_logout"> 
-        <observer name="customer_logout" 
+    <!--<event name="controller_action_postdispatch_customer_account_logout"> 
+        <observer name="controller_action_postdispatch_customer_account_logout" 
                   instance="Tealium\Tags\Observer\LogoutAccount" />
-    </event>
+    </event>-->
 
     <event name="customer_login"> 
         <observer name="customer_login" 

@@ -50,6 +50,15 @@ class Product extends AbstractHelper
         }
         
         $result['product_discount'] = [(string)number_format((float)$product_discount, 2, '.', '')];
+        //echo $result['product_unit_price']; exit;
+        if ($result['product_unit_price'][0] == 0) {
+            $children = $product->getTypeInstance()->getUsedProducts($product);
+            foreach ($children as $child) {
+                if ($result['product_unit_price'][0] < $child->getPrice()) {
+                    $result['product_unit_price'] = [(string)number_format((float)$child->getPrice(), 2, '.', '')];
+                }
+            }
+        }
 
         $categoryIds = $product->getCategoryIds(); 
         
@@ -57,31 +66,19 @@ class Product extends AbstractHelper
         $subCategory = false;
 
         // get main and subcategory from all category of the product
-        foreach ($categoryIds as $id) {
+        //echo json_encode($categoryIds); exit;
+        foreach ($categoryIds as $index => $id) {
             $category = $this->_categoryRepository->get($id, $this->_storeManager->getStore()->getId());
-            if(!$mainCategory) {
-                $mainCategory =  $category;
-            } else {
-                if ($mainCategory->getName() == $category->getParentCategory()->getName()) {
-                    $subCategory = $category;
-                    break;
-                } else if ($category->getName() == $mainCategory->getParentCategory()->getName()) {
-                    $subCategory = $mainCategory;
-                    $mainCategory = $category;
-                    break;
-                } else {
-                    $mainCategory = $category;
-                }
+            if ($index == 0) {
+                $result['product_category'] = $category->getName();
+            }
+            if ($index == 1) {
+                $result['product_subcategory'] = $category->getName();
+            }
+            if ($index != 0 && $index != 1) {
+                $result['product_subcategory_'.$index] = $category->getName();
             }
         }
-        if ($mainCategory) {
-            $result['product_category'] = [$mainCategory->getName()];
-        }
-
-        if ($subCategory) {
-            $result['product_subcategory'] = [$subCategory->getName()];
-        }
-
         return $result;
     }
 

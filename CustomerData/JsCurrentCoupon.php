@@ -44,7 +44,7 @@ class JsCurrentCoupon implements SectionSourceInterface
 
             $result['data'] = [];
             $result['data']['coupon_name'] = [$couponName];
-            $result['data']['coupon_amount'] = [$discountAmount];
+            $result['data']['coupon_amount'] = [(string)number_format((float)$discountAmount, 2, '.', '')];
             $result['data']['tealium_event'] = 'submit_coupon';
         }
 

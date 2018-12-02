@@ -29,6 +29,7 @@ class Index extends Action
 
 	public function execute()
 	{
+		//echo json_encode(phpinfo()); exit;
 		$cartData = $this->_cart->getQuote()->getAllVisibleItems();
 
 		$result = [
