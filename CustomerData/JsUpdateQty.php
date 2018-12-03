@@ -69,7 +69,7 @@ class JsUpdateQty implements SectionSourceInterface
                     array_push($result['data']['product_name'], $productData['product_name'][0]);
                     array_push($result['data']['product_id'], $product->getId());
                     array_push($result['data']['product_list_price'], $productData['product_list_price'][0]);
-                    array_push($result['data']['product_quantity'], $quoteItem->getQty());
+                    array_push($result['data']['product_quantity'], (string)$quoteItem->getQty());
                     array_push($result['data']['product_sku'], $productData['product_sku'][0]);
                     array_push($result['data']['product_subcategory'], $productData['product_subcategory'][0]);
                     array_push($result['data']['product_unit_price'], $productData['product_unit_price'][0]);
