@@ -35,6 +35,9 @@ class JsUpdateQty implements SectionSourceInterface
     {
         $productIdList=$this->_customerSession->getTealiumQty();
         $this->_customerSession->unsTealiumQty();
+
+        $productRealIdList = $this->_customerSession->getTealiumQtyReal();
+        $this->_customerSession->unsTealiumQtyReal();
         
         $result = [];
         if ($productIdList) {
@@ -60,23 +63,29 @@ class JsUpdateQty implements SectionSourceInterface
             foreach ($quoteList as $quoteItem) {
                 if (in_array($quoteItem->getItemId(), $productIdList)){
                     $product = $this->_productRepository->get($quoteItem->getSku());
-                    /*$product = $this->_productRepository->getById($product->getId());
-                    echo get_class($quoteItem).'    ';
-                    echo $quoteItem->getSpecialPrice().'    '; 
-                    echo $quoteItem->getProductId().'    '; 
-                    echo get_class($quoteItem->getProductOption()).'    '; 
-                    echo $product->getName().'    '; 
-                    exit;*/
                     $productData = $this->_productHelper->getProductData($product->getId());
                     array_push($result['data']['product_category'], $productData['product_category'][0]);
                     array_push($result['data']['product_discount'], $productData['product_discount'][0]);
-                    array_push($result['data']['product_name'], $quoteItem->getName());
-                    array_push($result['data']['product_id'], $quoteItem->getProductId());
+                    array_push($result['data']['product_name'], $productData['product_name'][0]);
+                    array_push($result['data']['product_id'], $product->getId());
                     array_push($result['data']['product_list_price'], $productData['product_list_price'][0]);
                     array_push($result['data']['product_quantity'], $quoteItem->getQty());
-                    array_push($result['data']['product_sku'], $quoteItem->getSku());
+                    array_push($result['data']['product_sku'], $productData['product_sku'][0]);
                     array_push($result['data']['product_subcategory'], $productData['product_subcategory'][0]);
-                    array_push($result['data']['product_unit_price'], (string)number_format((float)$quoteItem->getPrice(), 2, '.', ''));
+                    array_push($result['data']['product_unit_price'], $productData['product_unit_price'][0]);
+                    //if (isset($productData['product_subcategory_1'])
+                    for ($index = 2; $index <= 10; $index++) {
+                        if (isset($productData['product_subcategory_'.$index])) {
+                            if(!isset($result['data']['product_subcategory_'.$index])) {
+                                $result['data']['product_subcategory_'.$index] = array();
+                            }
+                            $count = count($result['data']['product_id'])-1;
+                            while (count($result['data']['product_subcategory_'.$index]) < $count) {
+                                array_push($result['data']['product_subcategory_'.$index], '');
+                            }
+                            array_push($result['data']['product_subcategory_'.$index], $productData['product_subcategory_'.$index][0]);
+                        }
+                    }
                 }
             }
         }

@@ -47,7 +47,18 @@ class Index extends Action
 		];
 
 		foreach ($cartData as $key => $value) {
-			$productData = $this->_productHelper->getProductData($value->getProductId());
+
+			$product = $this->_objectManager->get('Magento\Catalog\Model\Product')->load($value->getProductId());
+			foreach ($value->getOptions() as $option) {
+				if ($option) {
+					$optionStr = $option->getValue();
+					if ($optionStr && (strpos($optionStr, 'super_attribute') !== false)) {
+						$option_list = json_decode($optionStr);
+						$product = $this->_objectManager->get('Magento\ConfigurableProduct\Model\Product\Type\Configurable')->getProductByAttributes((array)$option_list->super_attribute,$product);
+					}
+				}
+			}
+			$productData = $this->_productHelper->getProductData($product->getId());
 
 			array_push($result['data']['product_category'], $productData['product_category'][0]);
 			array_push($result['data']['product_discount'], $productData['product_discount'][0]);
@@ -58,6 +69,18 @@ class Index extends Action
 			array_push($result['data']['product_sku'], $productData['product_sku'][0]);
 			array_push($result['data']['product_subcategory'], $productData['product_subcategory'][0]);
 			array_push($result['data']['product_unit_price'], $productData['product_unit_price'][0]);
+			for ($index = 2; $index <= 10; $index++) {
+				if (isset($productData['product_subcategory_'.$index])) {
+					if(!isset($result['data']['product_subcategory_'.$index])) {
+						$result['data']['product_subcategory_'.$index] = array();
+					}
+					$count = count($result['data']['product_id'])-1;
+					while (count($result['data']['product_subcategory_'.$index]) < $count) {
+						array_push($result['data']['product_subcategory_'.$index], '');
+					}
+					array_push($result['data']['product_subcategory_'.$index], $productData['product_subcategory_'.$index][0]);
+				}
+			}
 		}
 		
 		echo json_encode($result);

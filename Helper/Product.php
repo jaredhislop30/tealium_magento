@@ -34,28 +34,27 @@ class Product extends AbstractHelper
         $result = [];
         $product = $this->_productRepository->getById($product_id);
         $result['product_name'] = [(string)$product->getName()];
-        $result['product_unit_price'] = [(string)number_format((float)$product->getPrice(), 2, '.', '')];
+        $result['product_list_price'] = [(string)number_format((float)$product->getPrice(), 2, '.', '')];
         $result['product_sku'] = [(string)$product->getSku()];
-        $result['product_list_price']  = [(string)number_format((float)$product->getSpecialPrice(), 2, '.', '')];
+        $result['product_unit_price']  = [(string)number_format((float)$product->getSpecialPrice(), 2, '.', '')];
         $result['product_category'] = [''];
         $result['product_subcategory'] = [''];
         
         $product_discount = 0;
         if (
-            $result['product_unit_price'][0] != 0 && 
             $result['product_list_price'][0] != 0 && 
-            $result['product_unit_price'][0] != $result['product_list_price'][0]
+            $result['product_unit_price'][0] != 0 && 
+            $result['product_list_price'][0] != $result['product_unit_price'][0]
         ) {
-            $product_discount = 100 - round(($result['product_list_price'][0] / $result['product_unit_price'][0])*100);
+            $product_discount = abs(100 - round(($result['product_unit_price'][0] / $result['product_list_price'][0])*100));
         }
         
         $result['product_discount'] = [(string)number_format((float)$product_discount, 2, '.', '')];
-        //echo $result['product_unit_price']; exit;
-        if ($result['product_unit_price'][0] == 0) {
+        if ($result['product_list_price'][0] == 0) {
             $children = $product->getTypeInstance()->getUsedProducts($product);
             foreach ($children as $child) {
-                if ($result['product_unit_price'][0] < $child->getPrice()) {
-                    $result['product_unit_price'] = [(string)number_format((float)$child->getPrice(), 2, '.', '')];
+                if ($result['product_list_price'][0] < $child->getPrice()) {
+                    $result['product_list_price'][0] = (string)number_format((float)$child->getPrice(), 2, '.', '');
                 }
             }
         }
@@ -66,17 +65,17 @@ class Product extends AbstractHelper
         $subCategory = false;
 
         // get main and subcategory from all category of the product
-        //echo json_encode($categoryIds); exit;
+        
         foreach ($categoryIds as $index => $id) {
             $category = $this->_categoryRepository->get($id, $this->_storeManager->getStore()->getId());
             if ($index == 0) {
-                $result['product_category'] = $category->getName();
+                $result['product_category'][0] = $category->getName();
             }
             if ($index == 1) {
-                $result['product_subcategory'] = $category->getName();
+                $result['product_subcategory'][0] = $category->getName();
             }
             if ($index != 0 && $index != 1) {
-                $result['product_subcategory_'.$index] = $category->getName();
+                $result['product_subcategory_'.$index][0] = $category->getName();
             }
         }
         return $result;

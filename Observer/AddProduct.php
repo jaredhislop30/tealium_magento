@@ -54,9 +54,10 @@ class AddProduct implements ObserverInterface
         }
 
         $product_quantity = 1;
-        if (isset($request['qty'])) {
-        	$product_quantity = $request['qty'];
+        if (isset($requestParamList['qty'])) {
+        	$product_quantity = $requestParamList['qty'];
         }
+        //echo $requestParamList['qty']; exit;
         $this->_customerSession->setTealiumAddProductId($product_id);
         $this->_customerSession->setTealiumAddProductQty($product_quantity);
         
