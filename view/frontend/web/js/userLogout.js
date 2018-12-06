@@ -10,7 +10,7 @@ define([
                     var data = JSON.parse(dataJson);
                     if (data['customer_id'][0]) {
                         var tealiumTag = window.utag;
-                        data['tealium_event'] = ['user_logout'];
+                        data['tealium_event'] = 'user_logout';
                         tealiumTag.link(data);
                     }
                 });
