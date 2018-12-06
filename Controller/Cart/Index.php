@@ -42,7 +42,9 @@ class Index extends Action
 				'product_quantity'=>[],
 				'product_sku'=>[],
 				'product_subcategory'=>[],
-				'product_unit_price'=>[]
+				'product_unit_price'=>[],
+				'cart_total_items'=>0,
+				'cart_total_value'=>0
 			]
 		];
 
@@ -81,6 +83,8 @@ class Index extends Action
 					array_push($result['data']['product_subcategory_'.$index], $productData['product_subcategory_'.$index][0]);
 				}
 			}
+			cart_total_items += $value->getQty();
+			cart_total_value += $productData['product_unit_price'][0];
 		}
 		
 		echo json_encode($result);
