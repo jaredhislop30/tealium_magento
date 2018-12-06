@@ -33,11 +33,11 @@ class Product extends AbstractHelper
     public function getProductData($product_id, $array = true) {
         $result = [];
         $product = $this->_productRepository->getById($product_id);
-        
-        print($product->getImage());
-        print($product->getData('image'));
-        print($product->getData('thumbnail'));
-        print($product->getData('small_image'));
+
+        $result['product_url_1'] = $product->getImage();
+        $result['product_url_2'] = $product->getData('image');
+        $result['product_url_3'] = $product->getData('thumbnail');
+        $result['product_url_4'] = $product->getData('small_image');
 
         $result['product_name'] = [(string)$product->getName()];
         $result['product_list_price'] = [(string)number_format((float)$product->getPrice(), 2, '.', '')];
