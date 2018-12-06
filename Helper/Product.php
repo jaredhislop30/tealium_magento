@@ -34,10 +34,6 @@ class Product extends AbstractHelper
         $result = [];
         $product = $this->_productRepository->getById($product_id);
 
-        $result['product_url_1'] = $product->getImage();
-        $result['product_url_2'] = $product->getImageUrl();
-        $result['product_url_3'] = $product->getImage() . $product->getImageUrl();
-
         $result['product_name'] = [(string)$product->getName()];
         $result['product_list_price'] = [(string)number_format((float)$product->getPrice(), 2, '.', '')];
         $result['product_sku'] = [(string)$product->getSku()];
