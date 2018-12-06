@@ -83,8 +83,8 @@ class Index extends Action
 					array_push($result['data']['product_subcategory_'.$index], $productData['product_subcategory_'.$index][0]);
 				}
 			}
-			print($value->getQty());
-			print($productData['product_unit_price'][0]);
+			$result['data']['cart_total_items'] += $value->getQty();
+			$result['data']['cart_total_value'] += $productData['product_unit_price'][0];
 		}
 		
 		echo json_encode($result);
