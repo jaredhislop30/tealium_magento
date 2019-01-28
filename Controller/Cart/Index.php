@@ -37,19 +37,24 @@ class Index extends Action
         //echo json_encode(phpinfo()); exit;
         $cartData = $this->cart->getQuote()->getAllVisibleItems();
 
-        $result = [
-            'data'=>[
-                'product_category'=>[],
-                'product_discount'=>[],
-                'product_id'=>[],
-                'product_list_price'=>[],
-                'product_name'=>[],
-                'product_quantity'=>[],
-                'product_sku'=>[],
-                'product_subcategory'=>[],
-                'product_unit_price'=>[]
-            ]
-        ];
+		$cart_total_items = 0;
+		$cart_total_value = 0;
+
+		$result = [
+			'data'=>[ 
+				'product_category'=>[],
+				'product_discount'=>[],
+				'product_id'=>[],
+				'product_list_price'=>[],
+				'product_name'=>[],
+				'product_quantity'=>[],
+				'product_sku'=>[],
+				'product_subcategory'=>[],
+				'product_unit_price'=>[],
+				'cart_total_items'=>'',
+				'cart_total_value'=>''
+			]
+		];
 
         foreach ($cartData as $key => $value) {
             $responseObejct = $this->resultJsonFactory->create();
@@ -64,6 +69,9 @@ class Index extends Action
                 }
             }
             $productData = $this->productHelper->getProductData($product->getId());
+
+			$cart_total_items += $value->getQty();
+			$cart_total_value += $productData['product_unit_price'][0];
 
             array_push($result['data']['product_category'], $productData['product_category'][0]);
             array_push($result['data']['product_discount'], $productData['product_discount'][0]);
@@ -87,6 +95,9 @@ class Index extends Action
                 }
             }
         }
+
+		$result['data']['cart_total_items'] = strval($cart_total_items);
+		$result['data']['cart_total_value'] = strval($cart_total_value);
         
         $responseObejct->setData($result);
         /*echo json_encode($result);
