@@ -7,11 +7,9 @@
  */
 
 namespace Tealium\Tags\Helper;
-
 use \Magento\Framework\App\Helper\AbstractHelper;
 
-class TealiumData extends AbstractHelper
-{
+class TealiumData extends AbstractHelper{
 
     // Declare store and page as static vars and define setter methods
     private $store;
@@ -45,7 +43,7 @@ class TealiumData extends AbstractHelper
 
     public function setStore($store)
     {
-        $this->store = $store;
+       $this->store = $store;
     }
 
     public function setPage($page)
@@ -59,12 +57,12 @@ class TealiumData extends AbstractHelper
         $store = $this->store;
         $page = $this->page;
 
-        $outputArray = [];
+        $outputArray = array();
         $outputArray['site_region'] =
             $this->_objectManager->get('Magento\Framework\Locale\Resolver')->getLocale() ? : "";
         $outputArray['site_currency'] = $store->getCurrentCurrencyCode() ? : "";
         $titleBlock = $page->getLayout()->getBlock('page.main.title');
-        if ($titleBlock) {
+        if ($titleBlock){
             $outputArray['page_name'] =
                 $page->getLayout()->getBlock('page.main.title')->getPageTitle() ? : "";
             $outputArray['page_type'] = $page->getTealiumType() ? : "";
@@ -81,9 +79,9 @@ class TealiumData extends AbstractHelper
         $store = $this->store;
         $page = $this->page;
         $searchBlock = $page->getLayout()->getBlock('search.result');
-        $outputArray = [];
+        $outputArray = array();
 
-        if ($searchBlock === false) {
+        if ($searchBlock === false){
             return $outputArray;
         }
         $outputArray['site_region'] =
@@ -138,7 +136,7 @@ class TealiumData extends AbstractHelper
             }
         }
 
-        $outputArray = [];
+        $outputArray = array();
         $outputArray['site_region'] =
             $this->_objectManager->get('Magento\Framework\Locale\Resolver')->getLocale() ? : "";
         $outputArray['site_currency'] = $store->getCurrentCurrencyCode() ? : "";
@@ -158,7 +156,7 @@ class TealiumData extends AbstractHelper
         $page = $this->page;
         $_product = $this->_registry->registry('current_product');
 
-        $outputArray = [];
+        $outputArray = array();
         $outputArray['site_region'] =
             $this->_objectManager->get('Magento\Framework\Locale\Resolver')->getLocale() ? : "";
         $outputArray['site_currency'] = $store->getCurrentCurrencyCode() ? : "";
@@ -169,56 +167,56 @@ class TealiumData extends AbstractHelper
         // THE FOLLOWING NEEDS TO BE MATCHED ARRAYS (SAME NUMBER OF ELEMENTS)
         if ($_product) {
             if (!(
-            $outputArray['product_id'] = [$_product->getId()]
+            $outputArray['product_id'] = array($_product->getId())
             )) {
-                $outputArray['product_id'] = [];
+                $outputArray['product_id'] = array();
             }
 
             if (!(
-            $outputArray['product_sku'] = [
+            $outputArray['product_sku'] = array(
                 $_product->getSku()
-            ]
+            )
             )) {
-                $outputArray['product_sku'] = [];
+                $outputArray['product_sku'] = array();
             }
 
             if (!(
-            $outputArray['product_name'] = [
+            $outputArray['product_name'] = array(
                 $_product->getName()
-            ]
+            )
             )) {
-                $outputArray['product_name'] = [];
+                $outputArray['product_name'] = array();
             }
 
             $manufacturer = $_product->getAttributeText('manufacturer');
-            if ($manufacturer === false) {
-                $outputArray['product_brand'] = [""];
+            if ($manufacturer === false){
+                $outputArray['product_brand'] = array("");
             } else {
-                $outputArray['product_brand'] = [$manufacturer];
+                $outputArray['product_brand'] = array($manufacturer);
             }
 
             if (!(
-            $outputArray['product_unit_price'] = [
-                number_format($_product->getFinalPrice(), 2, '.', '')
-            ]
+            $outputArray['product_unit_price'] = array(
+                number_format($_product->getFinalPrice(), 2,'.','')
+            )
             )) {
-                $outputArray['product_unit_price'] = [];
+                $outputArray['product_unit_price'] = array();
             }
 
             if (!(
-            $outputArray['product_list_price'] = [
-                number_format($_product->getData('price'), 2, '.', '')
-            ]
+            $outputArray['product_list_price'] = array(
+                number_format($_product->getData('price'), 2,'.','')
+            )
             )) {
-                $outputArray['product_list_price'] = [];
+                $outputArray['product_list_price'] = array();
             }
         } else {
-            $outputArray['product_id'] = [];
-            $outputArray['product_sku'] = [];
-            $outputArray['product_name'] = [];
-            $outputArray['product_brand'] = [];
-            $outputArray['product_unit_price'] = [];
-            $outputArray['product_list_price'] = [];
+            $outputArray['product_id'] = array();
+            $outputArray['product_sku'] = array();
+            $outputArray['product_name'] = array();
+            $outputArray['product_brand'] = array();
+            $outputArray['product_unit_price'] = array();
+            $outputArray['product_list_price'] = array();
         }
 
         $outputArray['product_price'] = $outputArray['product_unit_price'];
@@ -227,22 +225,22 @@ class TealiumData extends AbstractHelper
 
         if ($this->_registry->registry('current_category')) {
             if ($this->_registry->registry('current_category')->getName()) {
-                $outputArray['product_category'] = [
+                $outputArray['product_category'] = array(
                     $this->_registry->registry('current_category')->getName()
-                ];
+                );
             } else {
-                $outputArray['product_category'] = [""];
+                $outputArray['product_category'] = array("");
             }
-        } elseif ($_product) {
+        } elseif($_product) {
             $cats = $_product->getCategoryIds();
-            if (count($cats)) {
+            if(count($cats) ){
                 $firstCategoryId = $cats[0];
                 $_category = $this->_objectManager->create('Magento\Catalog\Model\Category')->load($firstCategoryId);
-                $outputArray['product_category'] = [
+                $outputArray['product_category'] = array(
                     $_category->getName()
-                ];
+                );
             } else {
-                $outputArray['product_category'] = [""];
+                $outputArray['product_category'] = array("");
             }
         }
 
@@ -261,7 +259,7 @@ class TealiumData extends AbstractHelper
         $checkout_prices =
         $checkout_original_prices =
         $checkout_brands =
-            [];
+            array();
 
         if ($this->_checkoutSession) {
             $quote = $this->_checkoutSession->getQuote();
@@ -278,13 +276,13 @@ class TealiumData extends AbstractHelper
             }
         }
 
-        $outputArray = [];
+        $outputArray = array();
         $outputArray['site_region'] =
             $this->_objectManager->get('Magento\Framework\Locale\Resolver')->getLocale() ? : "";
         $outputArray['site_currency'] = $store->getCurrentCurrencyCode() ? : "";
 
         $titleBlock = $page->getLayout()->getBlock('page.main.title');
-        if ($titleBlock) {
+        if ($titleBlock){
             $outputArray['page_name'] =
                 $page->getLayout()->getBlock('page.main.title')->getPageTitle() ? : "";
             $outputArray['page_type'] = "cart";
@@ -294,15 +292,15 @@ class TealiumData extends AbstractHelper
         }
 
         // THE FOLLOWING NEEDS TO BE MATCHED ARRAYS (SAME NUMBER OF ELEMENTS)
-        $outputArray['product_id'] = $checkout_ids ? : [];
-        $outputArray['product_sku'] = $checkout_skus ? : [];
-        $outputArray['product_name'] = $checkout_names ? : [];
-        $outputArray['product_brand'] = $checkout_brands ? : [];
-        $outputArray['product_category'] = [];
-        $outputArray['product_quantity'] = $checkout_qtys ? : [];
-        $outputArray['product_unit_price'] = $checkout_prices ? : [];
+        $outputArray['product_id'] = $checkout_ids ? : array();
+        $outputArray['product_sku'] = $checkout_skus ? : array();
+        $outputArray['product_name'] = $checkout_names ? : array();
+        $outputArray['product_brand'] = $checkout_brands ? : array();
+        $outputArray['product_category'] = array();
+        $outputArray['product_quantity'] = $checkout_qtys ? : array();
+        $outputArray['product_unit_price'] = $checkout_prices ? : array();
         $outputArray['product_list_price'] =
-            $checkout_original_prices ? : [];
+            $checkout_original_prices ? : array();
 
         $outputArray['product_price'] = $outputArray['product_unit_price'];
         $outputArray['product_original_price'] =
@@ -355,7 +353,7 @@ class TealiumData extends AbstractHelper
                     number_format($item->getDiscountAmount(), 2, ".", "");
                 $discounts[] = $discount;
                 $applied_rules = explode(",", $item->getAppliedRuleIds());
-                $discount_object = [];
+                $discount_object = array();
                 $brands[] = $item->getProduct()->getBrand();
                 foreach ($applied_rules as $rule) {
                     $quantity = number_format(
@@ -380,22 +378,22 @@ class TealiumData extends AbstractHelper
                         ->load($rule)
                         ->getSimpleAction();
 
-                    $discount_object[] = [
+                    $discount_object[] = array(
                         "rule" => $rule,
                         "quantity" => $quantity,
                         "amount" => $amount,
                         "type" => $type
-                    ];
+                    );
                 }
-                $discount_quantity[] = [
+                $discount_quantity[] = array(
                     "product_id" => $item->getProductId(),
                     "total_discount" => $discount,
                     "discounts" => $discount_object
-                ];
+                );
             }
         }
 
-        $outputArray = [];
+        $outputArray = array();
 
         $outputArray['site_region'] =
             $this->_objectManager->get('Magento\Framework\Locale\Resolver')->getLocale() ? : "";
@@ -420,19 +418,19 @@ class TealiumData extends AbstractHelper
         $outputArray['order_currency'] = $order->getOrderCurrencyCode() ? : "";
         $outputArray['customer_id'] = $customer_id ? : "";
         $outputArray['customer_email'] = $order->getCustomerEmail() ? : "";
-        $outputArray['product_id'] = $ids ? : [];
-        $outputArray['product_sku'] = $skus ? : [];
-        $outputArray['product_name'] = $names ? : [];
-        $outputArray['product_brand'] = $brands ? : [];
-        $outputArray['product_category'] = [];
-        $outputArray['product_unit_price'] = $prices ? : [];
-        $outputArray['product_list_price'] = $original_prices ? : [];
+        $outputArray['product_id'] = $ids ? : array();
+        $outputArray['product_sku'] = $skus ? : array();
+        $outputArray['product_name'] = $names ? : array();
+        $outputArray['product_brand'] = $brands ? : array();
+        $outputArray['product_category'] = array();
+        $outputArray['product_unit_price'] = $prices ? : array();
+        $outputArray['product_list_price'] = $original_prices ? : array();
         $outputArray['product_price'] = $outputArray['product_unit_price'];
         $outputArray['product_original_price'] =
             $outputArray['product_list_price'];
-        $outputArray['product_quantity'] = $qtys ? : [];
-        $outputArray['product_discount'] = $discounts ? : [];
-        $outputArray['product_discounts'] = $discount_quantity ? : [];
+        $outputArray['product_quantity'] = $qtys ? : array();
+        $outputArray['product_discount'] = $discounts ? : array();
+        $outputArray['product_discounts'] = $discount_quantity ? : array();
 
         return $outputArray;
     }
@@ -455,13 +453,13 @@ class TealiumData extends AbstractHelper
                 $this->_objectManager->create('Magento\Customer\Model\Group')->load($groupId)->getCode();
         }
 
-        $outputArray = [];
+        $outputArray = array();
 
         $outputArray['site_region'] =
             $this->_objectManager->get('Magento\Framework\Locale\Resolver')->getLocale() ? : "";
         $outputArray['site_currency'] = $store->getCurrentCurrencyCode() ? : "";
         $titleBlock = $page->getLayout()->getBlock('page.main.title');
-        if ($titleBlock) {
+        if ($titleBlock){
             $outputArray['page_name'] =
                 $page->getLayout()->getBlock('page.main.title')->getPageTitle() ? : "";
             $outputArray['page_type'] = $page->getTealiumType() ? : "";

@@ -46,12 +46,14 @@ class JsLogoutAccount implements SectionSourceInterface
         $result = [];
 
         if (isset($id)) {
-            $result['data']['customer_email'] = [$email];
-            $result['data']['customer_id'] = [$id];
-            $result['data']['customer_type'] = [$type];
+            $result['data']['customer_email'] = $email;
+            $result['data']['customer_id'] = $id;
+            $result['data']['customer_type'] = $type;
             $result['data']['tealium_event'] = 'user_logout';
         }
         
         return $result;
     }
 }
+
+

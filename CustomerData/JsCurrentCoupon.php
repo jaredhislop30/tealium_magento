@@ -37,6 +37,7 @@ class JsCurrentCoupon implements SectionSourceInterface
         $result = [];
 
         if ($couponName) {
+
             $ruleId =   $this->_coupon->loadByCode($couponName)->getRuleId();
             $rule = $this->_rule->load($ruleId);
             $discountAmount = $rule->getDiscountAmount();
@@ -50,3 +51,5 @@ class JsCurrentCoupon implements SectionSourceInterface
         return $result;
     }
 }
+
+

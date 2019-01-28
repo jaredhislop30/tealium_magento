@@ -1,7 +1,6 @@
 <?php
 
 namespace Tealium\Tags\Helper;
-
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
@@ -15,12 +14,12 @@ class Product extends AbstractHelper
 
     protected $_productRepository;
 
-    protected $_categoryCollectionFactory;
+    protected  $_categoryCollectionFactory;
 
     protected $_categoryRepository;
 
     public function __construct(
-        StoreManagerInterface $storeManager,
+        StoreManagerInterface $storeManager, 
         ProductRepositoryInterface $productRepository,
         CollectionFactory $categoryCollectionFactory,
         CategoryRepositoryInterface $categoryRepository
@@ -31,10 +30,10 @@ class Product extends AbstractHelper
         $this->_categoryRepository = $categoryRepository;
     }
 
-    public function getProductData($product_id, $array = true)
-    {
+    public function getProductData($product_id, $array = true) {
         $result = [];
         $product = $this->_productRepository->getById($product_id);
+
         $result['product_name'] = [(string)$product->getName()];
         $result['product_list_price'] = [(string)number_format((float)$product->getPrice(), 2, '.', '')];
         $result['product_sku'] = [(string)$product->getSku()];
@@ -46,8 +45,9 @@ class Product extends AbstractHelper
         $result['product_subcategory'] = [''];
         
         $product_discount = 0;
-        if ($result['product_list_price'][0] != 0 &&
-            $result['product_unit_price'][0] != 0 &&
+        if (
+            $result['product_list_price'][0] != 0 && 
+            $result['product_unit_price'][0] != 0 && 
             $result['product_list_price'][0] != $result['product_unit_price'][0]
         ) {
             $product_discount = $result['product_list_price'][0] - $result['product_unit_price'][0];
@@ -63,7 +63,7 @@ class Product extends AbstractHelper
             }
         }
 
-        $categoryIds = $product->getCategoryIds();
+        $categoryIds = $product->getCategoryIds(); 
         
         $mainCategory = false;
         $subCategory = false;
@@ -84,4 +84,5 @@ class Product extends AbstractHelper
         }
         return $result;
     }
+
 }

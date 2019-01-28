@@ -31,7 +31,7 @@ class JsRemoveFromCart implements SectionSourceInterface
         $qty = $this->_customerSession->getTealiumRemoveProductQty();
         $this->_customerSession->unsTealiumAddProductQty();
 
-        $result = [];
+        $result = [];;
         if ($this->_customerSession->getTealiumEmptyCart()) {
             $result ['cart_empty'] = true;
             $this->_customerSession->unsTealiumEmptyCart();
@@ -47,3 +47,5 @@ class JsRemoveFromCart implements SectionSourceInterface
         return $result;
     }
 }
+
+
