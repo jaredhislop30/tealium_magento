@@ -32,6 +32,7 @@ class Index extends Action
         return parent::__construct($context);
     }
 
+
     public function execute()
     {
         //echo json_encode(phpinfo()); exit;
@@ -39,6 +40,7 @@ class Index extends Action
 
         $cart_total_items = 0;
         $cart_total_value = 0;
+
 
         $result = [
             'data'=>[ 
@@ -69,6 +71,7 @@ class Index extends Action
                 }
             }
             $productData = $this->productHelper->getProductData($product->getId());
+
             $cart_total_items += $value->getQty();
             $cart_total_value += $productData['product_unit_price'][0];
 
@@ -94,6 +97,7 @@ class Index extends Action
                 }
             }
         }
+
         
         $result['data']['cart_total_items'] = strval($cart_total_items);
         $result['data']['cart_total_value'] = strval($cart_total_value);

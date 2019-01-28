@@ -44,6 +44,7 @@ class User extends Action
         $groupObject = $this->_groupFactory->getById($groupId);
         $groupName = $groupObject->getCode();
         
+
         $responseObejct->setData(['customer_id' => $id, 'customer_type' => $groupName, 'customer_email' => $email ]);
     }
 }
