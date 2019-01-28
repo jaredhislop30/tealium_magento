@@ -30,14 +30,12 @@ class JsLoginAccount implements SectionSourceInterface
         $result = [];
         
         if ($id) {
-            $result['data']['customer_email'] = $email;
-            $result['data']['customer_id'] = $id;
-            $result['data']['customer_type'] = $type;
+            $result['data']['customer_email'] = [$email];
+            $result['data']['customer_id'] = [$id];
+            $result['data']['customer_type'] = [$type];
             $result['data']['tealium_event'] = 'user_login';
         }
         
         return $result;
     }
 }
-
-
