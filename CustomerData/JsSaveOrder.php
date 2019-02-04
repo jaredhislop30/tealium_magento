@@ -34,8 +34,9 @@ class JsSaveOrder implements SectionSourceInterface
         $result = [];
 
         if ($order_id) {
+
             $result = [
-                'data'=>[
+                'data'=>[ 
                     'product_category'=>[],
                     'product_discount'=>[],
                     'product_id'=>[],
@@ -69,3 +70,5 @@ class JsSaveOrder implements SectionSourceInterface
         return $result;
     }
 }
+
+

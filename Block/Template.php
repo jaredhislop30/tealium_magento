@@ -8,63 +8,56 @@
 
 namespace Tealium\Tags\Block;
 
-class Template extends \Magento\Framework\View\Element\Template
-{
+class Template extends \Magento\Framework\View\Element\Template{
 
-    private $objectManager;
+    protected $_objectManager;
 
-    private $tealiumType;
-    private $tealiumName;
+    protected $_tealiumType;
+    protected $_tealiumName;
 
     /**
      * @var \Magento\Framework\Registry
      */
 
-    private $registry;
+    protected $_registry;
 
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Framework\Registry $registry,
         array $data = []
-    ) {
-        $this->objectManager = $objectManager;
-        $this->registry = $registry;
+    )
+    {
+        $this->_objectManager = $objectManager;
+        $this->_registry = $registry;
         parent::__construct($context, $data);
     }
 
-    public function getStore()
-    {
+    public function getStore(){
         return $this->_storeManager->getStore();
     }
 
-    public function getObjectManager()
-    {
-        return $this->objectManager;
+    public function getObjectManager(){
+        return $this->_objectManager;
     }
 
-    public function setType($type)
-    {
-        $this->tealiumType = $type;
+    public function setType($type){
+        $this->_tealiumType = $type;
     }
 
-    public function getTealiumType()
-    {
-        return $this->tealiumType;
+    public function getTealiumType(){
+        return $this->_tealiumType;
     }
 
-    public function setName($name)
-    {
-        $this->tealiumName = $name;
+    public function setName($name){
+        $this->_tealiumName = $name;
     }
 
-    public function getTealiumName()
-    {
-        return $this->tealiumName;
+    public function getTealiumName(){
+        return $this->_tealiumName;
     }
 
-    public function getRegestry()
-    {
-        return $this->registry;
+    public function getRegestry(){
+        return $this->_registry;
     }
 }

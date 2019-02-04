@@ -42,3 +42,5 @@ class JsAddToWish implements SectionSourceInterface
         return $result;
     }
 }
+
+

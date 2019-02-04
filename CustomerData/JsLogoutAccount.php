@@ -55,3 +55,5 @@ class JsLogoutAccount implements SectionSourceInterface
         return $result;
     }
 }
+
+

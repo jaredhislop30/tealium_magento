@@ -44,3 +44,5 @@ class JsCreateAccount implements SectionSourceInterface
         return $result;
     }
 }
+
+
