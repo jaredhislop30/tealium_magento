@@ -5,7 +5,7 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Customer\Model\Session as CustomerSession;
 
-class AddToWish implements ObserverInterface
+class CheckoutAction implements ObserverInterface
 {
 
     protected $_customerSession;
@@ -28,7 +28,6 @@ class AddToWish implements ObserverInterface
         $order_ids = $observer->getData('order_ids');
 
         $this->_customerSession->setTealiumCheckout($order_ids);
-        
         return $this;
     }
 }
