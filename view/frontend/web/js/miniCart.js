@@ -8,7 +8,7 @@ define([
     return function () {
         $(".action.showcart").on('click', function() {
             if ($(this).hasClass('active')) {
-            	$.get(location.protocol + '//' + location.host+'/tealium/cart/index', function(data) {
+            	$.get(BASE_URL+'tealium/cart/index', function(data) {
             		var dataObject = data;
             		if (dataObject['data']['product_id'].length > 0) {
             			var tealiumTag = window.utag;

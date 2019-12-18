@@ -1,7 +1,8 @@
 define([
     'jquery',
-    'underscore'
-], function($, _){
+    'underscore',
+	'Tealium_Tags/js/utagLib'
+], function($, _, utagLib){
 	var new_url = BASE_URL;
     return function () {
         if (document.querySelectorAll('body > div.page-wrapper > header > div.panel.wrapper > div > ul > li.customer-welcome > div > ul > li.authorization-link > a').length != 0) {

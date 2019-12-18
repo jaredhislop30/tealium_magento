@@ -33,6 +33,7 @@ class Template extends \Magento\Framework\View\Element\Template
         parent::__construct($context, $data);
     }
 
+
     public function getStore()
     {
         return $this->_storeManager->getStore();

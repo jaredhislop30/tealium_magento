@@ -2,7 +2,9 @@
 
 define([
     'Magento_Customer/js/customer-data',
-    'underscore'
+    'underscore',
+	'Tealium_Tags/js/utagLib'
+/*	'utagLib1' */
 ], function(customerData, _){
     'use strict';
 
@@ -13,7 +15,10 @@ define([
     }
 
     return function (options) {
-
+	//	alert(window.utag);
+//	alert('test');
+		console.log('window.utag');
+		console.log(window.utag);
         var tealiumTag = window.utag;
 
         var dataObjectAdd = customerData.get("tealium-tags-add-to-cart");
