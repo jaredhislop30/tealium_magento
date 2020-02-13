@@ -10,6 +10,9 @@ namespace Tealium\Tags\Helper;
 
 use \Magento\Framework\App\Helper\AbstractHelper;
 use \Tealium\Tags\lib\Tealium\TealiumData;
+use Zend\View\Renderer\PhpRenderer;
+use Zend\View\Resolver\TemplatePathStack;
+use Zend\View\Model\ViewModel;
 
 class Data extends AbstractHelper
 {
@@ -82,11 +85,39 @@ class Data extends AbstractHelper
 
             // One way to define a custom udo is to include an external file
             // that defines "$udoElements"
+		
+			$filePath = $this->scopeConfig->getValue(
+                'tealium_tags/general/udo',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $store->getId()
+            );
+			$fileName = basename($filePath);         // $file is set to "index.php"
+			$filePath = dirname($filePath);
+			if($fileName != "" && $filePath != "" && file_exists($filePath))
+			{
+				$resolver = $this->_objectManager->create('Zend\View\Resolver\TemplatePathStack');
+				$resolver->addPath($filePath);
+				$viewApp = $this->_objectManager->create('Zend\View\Renderer\PhpRenderer');
+				$viewApp->setResolver($resolver, $data);
+				$viewApp->setVars($data);
+				$viewApp->render($fileName);
+				/*
+				$viewModel = $this->_objectManager->create('Zend\View\Model\ViewModel');
+				$viewModel->setVariable('foo', 'bar');
+				$viewModel->setTemplate($fileName);
+				$viewApp->render($viewModel);
+				*/
+				$udoElements = $viewApp->vars('udoElements');
+
+			}
+			
+       		/*
             include_once($this->scopeConfig->getValue(
                 'tealium_tags/general/udo',
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
                 $store->getId()
             ));
+			*/
 
             // Another way to define a custom udo is to define a "getCustomUdo"
             // method, which is used to set "$udoElements"
@@ -105,7 +136,7 @@ class Data extends AbstractHelper
             ) {
                 $udoElements = [];
             }
-
+		
             // if a custom udo is defined for the page type, set the udo
             if (isset($udoElements[$pageType])) {
                 $this->tealium->setCustomUdo($udoElements[$pageType]);

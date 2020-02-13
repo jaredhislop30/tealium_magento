@@ -2,6 +2,7 @@
 
 /** @var Magento\Framework\View\Element\Template  $this */
 $helper = $this->helper('Tealium\Tags\Helper\Data');
+
 $store = $this->getStore();
 //$tealium = new $helper($store);
 
@@ -15,5 +16,6 @@ if (!$helper->isEnabled($store)) {
 if (!$helper->getIsExternalScript($store)) {
     // get the udo and universal code snippet and render
     $tealium = $helper->getTealiumObject($store, $this);
+
     echo $tealium->render("tag");
 }

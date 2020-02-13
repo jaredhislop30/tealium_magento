@@ -16,7 +16,7 @@ $escaper = $this->getObjectManager()->create('Magento\Framework\Escaper');
 $searchBlock = $this->getLayout()->getBlock('catalogsearch_advanced_result');
 $searchCriterias = $searchBlock->getSearchCriterias();
 foreach (['left', 'right'] as $side) {
-    if (@$searchCriterias[$side]) {
+    if (isset($searchCriterias[$side]) && $searchCriterias[$side] ) {
         foreach ($searchCriterias[$side] as $criteria) {
             $terms[] = $escaper
                 ->escapeHtml(__($criteria['name']))

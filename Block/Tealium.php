@@ -44,10 +44,31 @@ class Tealium extends \Magento\Framework\View\Element\Template
         $tealiumData->setStore($data['store']);
         $tealiumData->setPage($data['page']);
 
+		$productOnPage = array();
+		$productOnPageId = array();
+		
+		
+		$q = $this->getRequest()->getParam('q');
+		if($q){
+			$categoryProductListBlock = $this->_layout->getBlock('search_result_list');
+		} else {
+			$categoryProductListBlock = $this->_layout->getBlock('category.products.list');
+		}
+		 // Fetch the current collection from the block and set pagination
+		if(!empty($categoryProductListBlock)){
+			$collections = $categoryProductListBlock->getLoadedProductCollection();
+			$collections->setCurPage(1)->setPageSize(4);
+			
+			foreach($collections as $product){
+				$productOnPage[] = $product->getSku();
+				$productOnPageId[] = $product->getId();
+			}
+			
+		}
         $udoElements = [
             'Home' => $tealiumData->getHome(),
-            'Search' =>$tealiumData->getSearch(),
-            'Category' =>$tealiumData->getCategory(),
+            'Search' =>$tealiumData->getSearch($productOnPage),
+            'Category' =>$tealiumData->getCategory($productOnPage, $productOnPageId),
             'ProductPage' => $tealiumData->getProductPage(),
             'Cart' => $tealiumData->getCartPage(),
             'Confirmation' => $tealiumData->getOrderConfirmation(),
@@ -67,16 +88,19 @@ class Tealium extends \Magento\Framework\View\Element\Template
 
         return $this;
     }
+	
+	
 
     // give an object of key value pairs to update in the udo,
     // or provide a key string and value string of a single udo var to update
     public function updateUdo($objectOrKey = "", $value = "")
     {
+	
         // get udo and put in local scope as "$udoObject"
         $udoObject = $this->udo;
 
         // set "$udo" depending on form of "$udoObject"
-        if ($udoObject instanceof Closure) {
+        if ($udoObject instanceof \Closure) {
             $udo = $udoObject();
         } elseif (is_array($udoObject)) {
             $udo = $udoObject;
@@ -87,8 +111,10 @@ class Tealium extends \Magento\Framework\View\Element\Template
         // "$updatedUdo" is an object of key/val pairs of vars to be updated
         // in the udo. It describes just the modifications to the current udo
         // so that it can be updated. (could probably be better named)
-        if ($objectOrKey instanceof Closure) {
+        if ($objectOrKey instanceof \Closure) {
+			
             $updatedUdo = $objectOrKey();
+			
         } elseif (is_array($objectOrKey)) {
             $updatedUdo = $objectOrKey;
         } else {
@@ -96,7 +122,7 @@ class Tealium extends \Magento\Framework\View\Element\Template
             // as a key/val pair
             $updatedUdo = "{}";
         }
-
+	
         // if $updatedUdo is an assoc array, iterate through its key/val
         // pairs and update the udo
         if (is_array($updatedUdo)) {
@@ -131,6 +157,7 @@ class Tealium extends \Magento\Framework\View\Element\Template
 
     public function render($type = null, $external = false, $sync = "sync")
     {
+		
         // check if the tealium api is being used and render just the data layer
         if ($this->_request->getParam('tealium_api') != "true" && $external) {
             // not using the api, and the script is an external script
@@ -154,7 +181,7 @@ class Tealium extends \Magento\Framework\View\Element\Template
         } else {
             // Either using the api, the udo is not an external script, or both.
             // Therefore the udo object must be generated as javascript code.
-
+				
             // include any customizations
             if (isset($this->customUdo)) {
                 $this->updateUdo($this->customUdo);
@@ -163,7 +190,7 @@ class Tealium extends \Magento\Framework\View\Element\Template
             $udoObject = $this->udo;
 
             // determine the udo obj's type and convert to JSON
-            if ($udoObject instanceof Closure) {
+            if ($udoObject instanceof \Closure) {
                 // pretty print in versions of php that support it
                 if (defined('JSON_PRETTY_PRINT')) {
                     $udoJson = json_encode($udoObject(), JSON_PRETTY_PRINT);
@@ -180,17 +207,19 @@ class Tealium extends \Magento\Framework\View\Element\Template
             } else {
                 $udoJson = "{}";
             }
-
+/* echo "test<pre>";
+			print_r($udoObject);
+			die; */
             // create the javascript for utag_data
-            $udoJs = "window.utag_data = $udoJson;";
+            $udoJs = "var utag_data = $udoJson;";
 
             // create the entire script tag to render for utag_data
             $udo = <<<EOD
 <!-- Tealium Universal Data Object / Data Layer -->
-<script>
-require(['domReady!'], function () {
+<div class="utagLib" style="display:none;">//tags.tiqcdn.com/utag/$this->account/$this->profile/$this->target/utag.js</div>
+<script type="text/javascript">
 $udoJs
-})
+console.log(window);
 </script>
 <!-- ****************************************** -->
 EOD;
@@ -209,10 +238,8 @@ EOD;
         // enclose the tealium tag js in a <script></script> tag
         $tag = <<<EOD
 <!-- Async Load of Tealium utag.js library -->
-<script>
-require(['domReady!'], function () {
+<script type="text/javascript">
 $insert_tag
-})
 </script>
 <!-- ************************************* -->
 EOD;
@@ -227,6 +254,7 @@ EOD;
         if ($this->account && $this->profile && $this->target) {
             if ($type == "tag") {
                 $renderedCode = $tag;
+				 $renderedCode = "";
             } elseif ($type == "udo") {
                 // starts with "var utag_data = " followed by json
                 $renderedCode = $udo;
